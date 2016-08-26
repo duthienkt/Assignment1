@@ -10,6 +10,7 @@ height = 600  # default screen height
 fps = 60
 duration = 1000 // fps
 lastUpdateTime = 0
+deltaTime = 0
 
 
 
@@ -31,11 +32,14 @@ def frame_rate(rate):
 
 def _wait_for_next():
     global lastUpdateTime
+    global deltaTime
     current_time = pygame.time.get_ticks()
     remain_time = duration - current_time + lastUpdateTime
     if (remain_time > 0):
         pygame.time.delay(remain_time)
-    lastUpdateTime = pygame.time.get_ticks()
+    current_time = pygame.time.get_ticks()
+    deltaTime = current_time-lastUpdateTime
+    lastUpdateTime = current_time
 
 
 def init_windows(w, h, cap="Assignment 1"):

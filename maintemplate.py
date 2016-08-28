@@ -7,20 +7,19 @@ graphics = None
 __name__ = "__main__"
 width = 800  # default screen width
 height = 600  # default screen height
-fps = 60
+fps = 45
 duration = 1000 // fps
 lastUpdateTime = 0
 deltaTime = 0
 
 
-
-class Start_Click(OnClicktListener):
+class StateChangeListener(OnClicktListener):
     def onClick(self, act):
         global currentState
         currentState = act
 
 
-currentState = StartScreen(Start_Click())
+currentState = None
 
 
 def frame_rate(rate):
@@ -38,7 +37,7 @@ def _wait_for_next():
     if (remain_time > 0):
         pygame.time.delay(remain_time)
     current_time = pygame.time.get_ticks()
-    deltaTime = current_time-lastUpdateTime
+    deltaTime = current_time - lastUpdateTime
     lastUpdateTime = current_time
 
 
@@ -55,14 +54,15 @@ def init_windows(w, h, cap="Assignment 1"):
 
 def main():
     init_windows(800, 600)
-
+    currentState = StartScreen(graphics, StateChangeListener())
     while 1:
         events = pygame.event.get()
         for event in events:
             if event.type == QUIT:
                 return
         currentState.handleEvent(events)
-        currentState.draw()
+        currentState.draw(deltaTime)
+        pygame.display.update()
         _wait_for_next()
 
 

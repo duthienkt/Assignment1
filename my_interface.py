@@ -1,5 +1,5 @@
 class IActivity:
-    def draw(self):
+    def draw(self, delta_time):
         pass
 
     def handleEvent(self, events):
@@ -8,3 +8,4 @@ class IActivity:
 class OnClicktListener:
     def onClick(self, activity):
         pass
+

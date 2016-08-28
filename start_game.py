@@ -94,7 +94,7 @@ class Menu:
         pass
 
     def get_bubble_gra(self, y):
-        if (y < self.h / 2)
+        if (y < self.h / 2):
             return
 
 

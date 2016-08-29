@@ -1,6 +1,7 @@
 
 import pygame
 from os import path
+import threading
 
 """VRS-@Copyright 2016"""
 
@@ -38,7 +39,7 @@ class BaseSprite(pygame.sprite.Sprite):
 
 """================================== IMAGE_VIEW================================================"""
 
-"""ImageSprite - SUPPORT FOR RENDERING IMAGE ON SURFACE"""
+"""ImageSprite - SUPPORT FOR RENDER IMAGE ON SURFACE"""
 class ImageSprite(BaseSprite):
     def __init__(self, surface, ww, wh):
         BaseSprite.__init__(self, surface, ww, wh)
@@ -59,7 +60,7 @@ class ImageSprite(BaseSprite):
 
 """================================== TEXT_VIEW================================================"""
 
-"""TEXT BASE CLASS = SUPPORT FOR RENDERING TEXT ON SURFACE"""
+"""TEXT BASE CLASS = SUPPORT FOR RENDER TEXT ON SURFACE"""
 class TextBase(BaseSprite):
 
     def __init__(self, surface, ww, hh):
@@ -147,6 +148,62 @@ class TextDrawable(TextBase):
         self.currentDur += self.step
         self.lastTime = pygame.time.get_ticks()
 
+
+class TextCount(TextBase):
+
+    def __init__(self, surface, ww, wh):
+        TextBase.__init__(self, surface, ww, wh)
+        self.current_duration = 0
+        #self.duration = 10 # 10s
+        self.step = 1
+        self.number = 100
+        self.text_prefix = "Counting: "
+        self.text_postfix = " Point"
+        self.text = self.text_prefix + str(0)
+        self.interval = 2 # time in second for updating text
+        self.is_started = False
+        self.is_stop = False
+        self.onCountingFinished = None
+
+    # def setDuration(self, duration):
+    #     self.duration = duration
+    #     self.interval = self.step / self.duration
+    #     pass
+
+    def setOnCountingFinished(self, l):
+        self.onCountingFinished = l
+
+
+    def setInterval(self, interval):
+        self.interval = interval
+
+    def start(self):
+        if self.is_started:
+            #print("IT'S STARTED, MUST CALL ONCE")
+            return
+            pass
+        else:
+            self.is_started = True
+            self.is_stop = False
+            threading.Timer(self.interval, self.countRunnable).start()
+        pass
+
+    def countRunnable(self):
+        if self.is_stop:
+            self.onCountingFinished()
+            return
+        self.current_duration += self.step
+        print("TEST_TEXT_COUNT")
+        if self.current_duration >= self.number:
+            self.current_duration = self.number
+            self.stop()
+        self.text = self.text_prefix + str(self.current_duration) + str(self.text_postfix)
+        threading.Timer(self.interval, self.countRunnable).start()
+
+    def stop(self):
+        #threading.Timer(self.interval, self.countRunnable)._stop()
+        self.is_stop = True
+
 """================================== END OF TEXT_VIEW================================================"""
 
 
@@ -205,8 +262,17 @@ class GameOver(object):
         self.txtLevel = self.newTextDrawable("Your Level: 5", pos_x_base, pos_y_base + text_y_space )
         self.txtLevel.setOnDrawFinishedListener(self.onTextLevelDrawFinished)
 
-        self.txtHelp = self.newTextDrawable("Press [Back Space] to back to Home, press [Enter] to retry",
-                                             pos_x_base, pos_y_base + text_y_space * 2 )
+        self.txtHelp = self.newTextDrawable("Press [Back Space] to back to Home, press [Enter] to try again",
+                                             pos_x_base, pos_y_base + text_y_space * 3 )
+
+        self.txtCount = TextCount(self.surface, self.WIDTH, self.HEIGHT)
+        self.txtCount.setTextColor((255, 0, 0))
+        self.txtCount.number = 100
+        self.txtCount.step = 1
+        self.txtCount.setInterval(0.001)
+        self.txtCount.setPosition(pos_x_base, pos_y_base + text_y_space * 2)
+        self.txtCount.setOnCountingFinished(self.onCountingFinished)
+        self.sprites.add(self.txtCount)
 
     def newTextDrawable(self, text, pos_x, pos_y):
         text_size = 26
@@ -222,17 +288,21 @@ class GameOver(object):
         new_text.configFont(text_font, text_size)
         return new_text
 
+    def onCountingFinished(self):
+        self.sprites.add(self.txtHelp)
+        pass
+
     def onGOVDrawFinished(self):
         self.sprites.add(self.txtScore)
         self.sprites.add(self.txtLevel)
-        self.sprites.add(self.txtHelp)
+        # self.sprites.add(self.txtHelp)
 
     def onTextScoreDrawFinished(self):
         self.sprites.add(self.txtLevel)
 
     def onTextLevelDrawFinished(self):
-        self.sprites.add(self.txtHelp)
-
+        #self.sprites.add(self.txtHelp)
+        pass
     def draw(self):
         self.sprites.draw(self.surface)
 
@@ -250,7 +320,7 @@ class GameOver(object):
             self.surface.fill(BLACK)
             gameOver.update()
             pygame.display.flip()
-
+            self.txtCount.start()
             self.clock.tick(self.FPS)
         pygame.quit()
 

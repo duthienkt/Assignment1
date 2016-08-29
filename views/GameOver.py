@@ -38,7 +38,7 @@ class BaseSprite(pygame.sprite.Sprite):
 
 """================================== IMAGE_VIEW================================================"""
 
-"""ImageSprite - SUPPORT FOR RENDER IMAGE ON SURFACE"""
+"""ImageSprite - SUPPORT FOR RENDERING IMAGE ON SURFACE"""
 class ImageSprite(BaseSprite):
     def __init__(self, surface, ww, wh):
         BaseSprite.__init__(self, surface, ww, wh)
@@ -59,7 +59,7 @@ class ImageSprite(BaseSprite):
 
 """================================== TEXT_VIEW================================================"""
 
-"""TEXT BASE CLASS = SUPPORT FOR RENDER TEXT ON SURFACE"""
+"""TEXT BASE CLASS = SUPPORT FOR RENDERING TEXT ON SURFACE"""
 class TextBase(BaseSprite):
 
     def __init__(self, surface, ww, hh):
@@ -205,7 +205,7 @@ class GameOver(object):
         self.txtLevel = self.newTextDrawable("Your Level: 5", pos_x_base, pos_y_base + text_y_space )
         self.txtLevel.setOnDrawFinishedListener(self.onTextLevelDrawFinished)
 
-        self.txtHelp = self.newTextDrawable("Press [Back Space] to back to Home, press [Enter] to try again",
+        self.txtHelp = self.newTextDrawable("Press [Back Space] to back to Home, press [Enter] to retry",
                                              pos_x_base, pos_y_base + text_y_space * 2 )
 
     def newTextDrawable(self, text, pos_x, pos_y):

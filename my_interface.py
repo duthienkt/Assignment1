@@ -1,11 +1,11 @@
 class IActivity:
-    def draw(self, delta_time):
+    def draw(self, graphics, delta_time):
         pass
 
     def handleEvent(self, events):
         pass
 
-class OnClicktListener:
-    def onClick(self, activity):
-        pass
 
+class OnClicktListener:
+    def requestChange(self, activity):
+        pass

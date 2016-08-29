@@ -20,9 +20,10 @@ class StartScreen(IActivity):
         self.graphics = graphics
         self.bg = Backgroud(graphics.get_width(), graphics.get_height())
         self.menu = Menu(graphics.get_width(), graphics.get_height())
+
         pass
 
-    def draw(self, delta_time):
+    def draw(self, graphic, delta_time):
         self.bg.draw(self.graphics, delta_time)
         self.menu.draw(self.graphics, delta_time)
 
@@ -69,9 +70,8 @@ class Menu:
     logoY = 0
     deg = 0.0
 
-    gra = 0.08
-    pull = 0.16
-    v = 0.12
+    v = -0.12
+    state = 0
 
     def __init__(self, w, h):
         self.w = w
@@ -81,21 +81,17 @@ class Menu:
         self.logoY = h
 
     def draw(self, graphics, delta_time):
-        delta = 0
-        v += (self.pull - self.grav) * delta_time
-        if (self.logoY <= self.h / 2):
-            self.logoY = self.h / 2
-            self.deg += delta_time * 0.003
-            delta = -math.sin(self.deg) * 15
-        else:
-            self.logoY -= v
+        if self.state == 0:
+            if (self.logoY < self.w / 2.5):
+                self.logoY = self.w / 2.5
+                self.state = 1
+            else:
+                self.logoY -= delta_time / 15.0
+        elif self.state == 1:
+            self.deg += delta_time * 0.006
+            self.logoY = self.w / 2.5-math.sin(self.deg)*10
 
-        graphics.blit(self.logo, (self.logoX, self.logoY + delta))
-        pass
-
-    def get_bubble_gra(self, y):
-        if (y < self.h / 2):
-            return
+        graphics.blit(self.logo, (self.logoX, self.logoY))
 
 
 class Backgroud:

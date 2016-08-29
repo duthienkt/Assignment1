@@ -14,7 +14,7 @@ deltaTime = 0
 
 
 class StateChangeListener(OnClicktListener):
-    def onClick(self, act):
+    def requestChange(self, act):
         global currentState
         currentState = act
 
@@ -61,10 +61,11 @@ def main():
             if event.type == QUIT:
                 return
         currentState.handleEvent(events)
-        currentState.draw(deltaTime)
+        currentState.draw(graphics,deltaTime)
         pygame.display.update()
         _wait_for_next()
 
 
 if __name__ == '__main__':
     main()
+

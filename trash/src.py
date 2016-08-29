@@ -1,4 +1,3 @@
-import StartScreen
 import numpy
 import pygame
 import random
@@ -159,13 +158,13 @@ def HandleInputAndEvent():
                 pygame.time.set_timer(round_timer_event, 0)
 
 
-# while True:
-#     DrawScreen()
-#     HandleInputAndEvent()
-#     fpsClock.tick(FPS)
-#
+while True:
+    DrawScreen()
+    HandleInputAndEvent()
+    fpsClock.tick(FPS)
 
-a = StartScreen()
-a.draw()
+
+#a = StartScreen()
+#a.draw()
 
 

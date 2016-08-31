@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from start_game import *
 from my_interface import *
+from game import *
 
 graphics = None
 __name__ = "__main__"
@@ -29,6 +30,10 @@ def frame_rate(rate):
     duration = 1000 // fps
 
 
+'''
+#Moved to game.py
+
+
 def _wait_for_next():
     global lastUpdateTime
     global deltaTime
@@ -39,7 +44,7 @@ def _wait_for_next():
     current_time = pygame.time.get_ticks()
     deltaTime = current_time - lastUpdateTime
     lastUpdateTime = current_time
-
+'''
 
 def init_windows(w, h, cap="Assignment 1"):
     global graphics
@@ -54,6 +59,10 @@ def init_windows(w, h, cap="Assignment 1"):
 
 def main():
     init_windows(800, 600)
+
+    '''
+    #Moved to game.py
+
     currentState = StartScreen(graphics, StateChangeListener())
     while 1:
         events = pygame.event.get()
@@ -62,9 +71,12 @@ def main():
                 return
         currentState.handleEvent(events)
         currentState.draw(deltaTime)
-        pygame.display.update()
+        pygame.display.update() #pygame.display.flip() tot hon
         _wait_for_next()
+    '''
 
+    game = Game(graphics)
+    game.run()
 
 if __name__ == '__main__':
     main()

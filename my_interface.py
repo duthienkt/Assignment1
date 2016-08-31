@@ -1,8 +1,12 @@
 class IActivity:
-    def draw(self, delta_time):
+    def draw(self, graphics):
         pass
 
-    def handleEvent(self, events):
+    # handle 1 event
+    def handleEvent(self, event):
+        pass
+
+    def update(self):
         pass
 
 class OnClicktListener:

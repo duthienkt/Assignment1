@@ -16,6 +16,10 @@ class StartScreen(IActivity):
     menu = None
 
     def __init__(self, graphics, listener):
+
+        self.done = False
+        self.nextState = "RUNNING"
+
         self.listener = listener
         self.graphics = graphics
         self.bg = Backgroud(graphics.get_width(), graphics.get_height())

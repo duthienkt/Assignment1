@@ -64,7 +64,8 @@ class BubbleFly(Animation):
                          (random.randint(0, w), random.randint(h, h + 100)), random.randint(3, 7))
 
     def __init__(self, bubble_type, position, v):
-        super().__init__(Constant.DATA_FOLDER + Constant.PATH_BUBBLE[bubble_type], 21, 100)
+        super().__init__(Constant.DATA_FOLDER + Constant.PATH_BUBBLE[bubble_type], Constant.BUBBLE_FRAME_COUNT, 100)
+        self.bubble_type = bubble_type
         self.id = Constant.get_unique_int()
         self.position = position
         self.v = v
@@ -78,6 +79,21 @@ class BubbleFly(Animation):
     def is_alive(self):
         (x, y) = self.position
         return y > -self.height
+
+
+class BubbleExp(Animation):
+    @staticmethod
+    def create_from_bubble(bubble):
+        return BubbleExp(bubble.bubble_type, bubble.position)
+
+    def __init__(self, bubble_type, position):
+        super().__init__(Constant.DATA_FOLDER + "be_yellow.png", Constant.BUBBLE_EXP_FRAME_COUNT, 50, False)
+        self.id = Constant.get_unique_int()
+        self.position = position
+        self.bubble_type = bubble_type
+
+    def draw(self, delta_time, screen, position=(0, 0)):
+        super().draw(delta_time, screen, self.position)
 
 
 class BackGround(PDrawable):
@@ -97,6 +113,10 @@ class BackGround(PDrawable):
             j = len(self.bubbles) - 1 - i
             bub = self.bubbles[j]
             bub.draw(delta_time, screen)
+            (x, y) = bub.position
+            if isinstance(bub, BubbleFly):
+                if y < 150:
+                    self.bubbles[j] = BubbleExp.create_from_bubble(bub)
 
         for i in range(len(self.bubbles)):
             j = len(self.bubbles) - 1 - i

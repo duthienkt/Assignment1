@@ -13,6 +13,7 @@ class Constant:
     BUBBLE_YELLOW = 5
 
     DATA_FOLDER = "assets/"
+    PATH_LOGO = DATA_FOLDER+"LOGO.png"
     PATH_BUBBLE = ["bub_blue.png", "bub_violet.png", "bub_green.png", "bub_light_blue.png", "bub_red.png",
                    "bub_yellow.png"]
 

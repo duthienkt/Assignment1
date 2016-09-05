@@ -37,7 +37,7 @@ def update():
 #########################My library for pyGame, convert it to Processing################################################
 width = 800  # default screen width
 height = 600  # default screen height
-graphics = None
+screen = None
 frameCount = 0
 fps = 60
 duration = 1000 // fps
@@ -51,13 +51,13 @@ def frame_rate(rate):
     fps = rate
     duration = 1000 // fps
 
-
 def load_image(path):
     return pygame.image.load(path)
 
 
+
 def draw_image(img, x, y):
-    graphics.blit(img, (x, y))
+    screen.blit(img, (x, y))
 
 
 def scale_image(surface, w, h):
@@ -75,7 +75,7 @@ def _wait_for_next():
 
 
 def size(w, h, cap=caption):
-    global graphics
+    global screen
     global width
     global height
     width = w

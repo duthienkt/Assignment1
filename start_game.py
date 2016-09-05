@@ -1,65 +1,28 @@
-from my_interface import IActivity
 import pygame
-from pygame.locals import *
 import math
+from processing import *
+from animation import *
+from constants import *
+import random
 
 
-class StartScreen(IActivity):
-    listener = None
-    graphics = None
+class StartScreen(PActivity):
+    def __init__(self, context):
+        super().__init__(context)
+        self.backGround = BackGround(context.width, context.height)
 
-    mouseX = 0
-    mouseY = 0
-    mousePressed = False
-
-    bg = None
-    menu = None
-
-    def __init__(self, graphics, listener):
-        self.listener = listener
-        self.graphics = graphics
-        self.bg = Backgroud(graphics.get_width(), graphics.get_height())
-        self.menu = Menu(graphics.get_width(), graphics.get_height())
-
+    def draw(self, delta_time, screen, position=(0, 0)):
+        self.backGround.draw(delta_time, screen)
         pass
 
-    def draw(self, graphic, delta_time):
-        self.bg.draw(self.graphics, delta_time)
-        self.menu.draw(self.graphics, delta_time)
+    def on_mouse_pressed(self, button, position):
+        super().on_mouse_pressed(button, position)
 
-        pass
+    def on_mouse_move(self, position, rel, buttons):
+        super().on_mouse_move(position, rel, buttons)
 
-    def onMousePresse(self, button, x, y):
-        self.mousePressed = True
-        self.mouseX = x
-        self.mouseY = y
-        pass
-
-    def onMouseRelease(self, button, x, y):
-        self.mousePressed = False
-        self.mouseX = x
-        self.mouseY = y
-
-        pass
-
-    def onMouseMove(self, x, y, dx, dy):
-        self.mouseX = x
-        self.mouseY = y
-        pass
-
-    def handleEvent(self, events):
-        for event in events:
-            if event.type == pygame.MOUSEBUTTONUP:
-                (x, y) = event.pos
-                self.onMouseRelease(event.button, x, y)
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                (x, y) = event.pos
-                self.onMousePresse(event.button, x, y)
-
-            elif event.type == pygame.MOUSEMOTION:
-                (x, y) = event.pos
-                (dx, dy) = event.rel
-                self.onMouseMove(x, y, dx, dy)
+    def on_mouse_released(self, button, position):
+        super().on_mouse_released(button, position)
 
 
 class Menu:
@@ -89,26 +52,56 @@ class Menu:
                 self.logoY -= delta_time / 15.0
         elif self.state == 1:
             self.deg += delta_time * 0.006
-            self.logoY = self.w / 2.5-math.sin(self.deg)*10
+            self.logoY = self.w / 2.5 - math.sin(self.deg) * 10
 
         graphics.blit(self.logo, (self.logoX, self.logoY))
 
 
-class Backgroud:
-    w = 0
-    h = 0
-    bg = None
+class BubbleFly(Animation):
+    @staticmethod
+    def create_random(w, h):
+        return BubbleFly(random.randint(0, len(Constant.PATH_BUBBLE) - 1),
+                         (random.randint(0, w), random.randint(h, h + 100)), random.randint(3, 7))
 
+    def __init__(self, bubble_type, position, v):
+        super().__init__(Constant.DATA_FOLDER + Constant.PATH_BUBBLE[bubble_type], 21, 100)
+        self.id = Constant.get_unique_int()
+        self.position = position
+        self.v = v
+
+    def draw(self, delta_time, screen, position=(0, 0)):
+        (x, y) = self.position
+        # print(self.position)
+        self.position = (x, y - self.v)
+        super().draw(delta_time, screen, self.position)
+
+    def is_alive(self):
+        (x, y) = self.position
+        return y > -self.height
+
+
+class BackGround(PDrawable):
     def __init__(self, w, h):
         self.w = w
         self.h = h
         self.bg = pygame.Surface((w, h))
         self.bg.fill(Constant.BG_COLOR)
+        self.bubbles = []
 
-    def draw(self, graphics, delta_time):
-        graphics.blit(self.bg, (0, 0))
+    def draw(self, delta_time, screen, position=(0, 0)):
+        screen.blit(self.bg, position)
+        if len(self.bubbles) < 17:
+            self.bubbles.append(BubbleFly.create_random(self.w, self.h))
+
+        for i in range(len(self.bubbles)):
+            j = len(self.bubbles) - 1 - i
+            bub = self.bubbles[j]
+            bub.draw(delta_time, screen)
+
+        for i in range(len(self.bubbles)):
+            j = len(self.bubbles) - 1 - i
+            bub = self.bubbles[j]
+            if not bub.is_alive():
+                self.bubbles.remove(bub)
+
         pass
-
-
-class Constant:
-    BG_COLOR = pygame.Color(38, 100, 100, 255)

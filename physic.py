@@ -31,7 +31,7 @@ class Bubble(Animation, Interactive):
         return False
 
 
-class BubbleExp(Animation):
+class BubbleExp(Animation, Interactive):
     @staticmethod
     def create_from_bubble(bubble):
         return BubbleExp(bubble.bubble_type, bubble.position)

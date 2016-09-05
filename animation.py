@@ -1,7 +1,6 @@
-import pygame
 from pygame.locals import *
 from garfield import *
-from processing import *
+from processing import PDrawable
 
 pygame.init()
 

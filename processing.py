@@ -1,6 +1,6 @@
 from abc import abstractproperty
 
-from garfield import *
+from garfield import Interactive
 
 
 class PDrawable:

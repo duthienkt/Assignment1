@@ -38,12 +38,7 @@ class Animation(PDrawable):
     def pick_color(self, position):
         if not self.is_alive():
             return None
-        (x, y) = position
-        x = int(x)
-        y = int(y)
-        if x < 0 or y < 0 or x >= self.width or y >= self.height:
-            return None
-        return self.sprites[self.frameId].get_at(position)
+        return garfield_pick_color(self.sprites[self.frameId], position)
 
     def is_alive(self):
         return self.frameId < self.frameCount

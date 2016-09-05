@@ -1,13 +1,12 @@
-from abc import abstractproperty
+from abc import abstractmethod
 
 from garfield import Interactive
 
 
 class PDrawable:
-    @abstractproperty
+    @abstractmethod
     def draw(self, delta_time, screen, position=(0, 0)):
         pass
-
 
 
 class PActivity(PDrawable, Interactive):

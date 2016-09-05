@@ -1,4 +1,4 @@
-from abc import abstractproperty
+from abc import abstractproperty, abstractmethod
 
 import pygame
 
@@ -12,8 +12,17 @@ def garfield_load_image(path):
     return image_cache[path]
 
 
+def garfield_pick_color(image, position):
+    (x, y) = position
+    x = int(x)
+    y = int(y)
+    if x < 0 or y < 0 or x >= image.get_width() or y >= image.get_height():
+        return None
+    return image.get_at(position)
+
+
 class Drawable:
-    @abstractproperty
+    @abstractmethod
     def draw(self, screen=None, position=(0, 0)):
         pass
 
@@ -24,12 +33,12 @@ class Interactive:
         """Called when mouse is pressed. button : int(1:3); position : (int, int)"""
         return False
 
-    @abstractproperty
+    @abstractmethod
     def on_mouse_released(self, button, position):
         """Called when mouse is pressed. button : int(1:3); position : (int, int)"""
         pass
 
-    @abstractproperty
+    @abstractmethod
     def on_mouse_move(self, position, rel, buttons):
         """Called when mouse is moved. button : (int, int, int); position : (int, int), rel : position : (int, int)"""
         pass
@@ -46,12 +55,12 @@ class Garfield(Drawable, Interactive):
         self.caption = "Garfield"
         self.screen = None
 
-    @abstractproperty
+    @abstractmethod
     def setting(self):
         """Create size, setup caption"""
         pass
 
-    @abstractproperty
+    @abstractmethod
     def setup(self):
         """Called before first frame, after setting and windows is create, load your image here"""
         pass

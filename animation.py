@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from garfield import *
 from processing import *
+
 pygame.init()
 
 

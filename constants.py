@@ -17,6 +17,15 @@ class Constant:
                    "bub_yellow.png"]
 
     BUBBLE_EXP_FRAME_COUNT = 7
+    BUBBLE_EXP_BLUE = 0
+    BUBBLE_EXP_VIOLET = 1
+    BUBBLE_EXP_GREEN = 2
+    BUBBLE_EXP_LIGHT_BLUE = 3
+    BUBBLE_EXP_RED = 4
+    BUBBLE_EXP_YELLOW = 5
+    PATH_BUBBLE_EXP = ["be_blue.png", "be_violet.png", "be_green.png", "be_light_blue.png", "be_red.png",
+                       "be_yellow.png"]
+
     uniqueInt = 0
 
     @staticmethod

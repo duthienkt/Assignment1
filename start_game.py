@@ -87,7 +87,8 @@ class BubbleExp(Animation):
         return BubbleExp(bubble.bubble_type, bubble.position)
 
     def __init__(self, bubble_type, position):
-        super().__init__(Constant.DATA_FOLDER + "be_yellow.png", Constant.BUBBLE_EXP_FRAME_COUNT, 50, False)
+        super().__init__(Constant.DATA_FOLDER + Constant.PATH_BUBBLE_EXP[bubble_type], Constant.BUBBLE_EXP_FRAME_COUNT,
+                         30, False)
         self.id = Constant.get_unique_int()
         self.position = position
         self.bubble_type = bubble_type

@@ -18,7 +18,7 @@ def garfield_pick_color(image, position):
     y = int(y)
     if x < 0 or y < 0 or x >= image.get_width() or y >= image.get_height():
         return None
-    return image.get_at(position)
+    return image.get_at((x, y))
 
 
 class Drawable:
@@ -36,7 +36,7 @@ class Interactive:
     @abstractmethod
     def on_mouse_released(self, button, position):
         """Called when mouse is pressed. button : int(1:3); position : (int, int)"""
-        pass
+        return False
 
     @abstractmethod
     def on_mouse_move(self, position, rel, buttons):
@@ -54,6 +54,7 @@ class Garfield(Drawable, Interactive):
         self.deltaTime = 0
         self.caption = "Garfield"
         self.screen = None
+        self.isContinue = True
 
     @abstractmethod
     def setting(self):
@@ -80,6 +81,9 @@ class Garfield(Drawable, Interactive):
         self.fps = rate
         self.duration = 1000 // rate
 
+    def exit(self):
+        self.isContinue = False
+
     def __wait_for_next_frame__(self):
         current_time = pygame.time.get_ticks()
         remain_time = self.duration - current_time + self.lastUpdateTime
@@ -95,7 +99,7 @@ class Garfield(Drawable, Interactive):
         pygame.display.set_caption(self.caption)
 
     def __main_loop__(self):
-        while True:
+        while self.isContinue:
             events = pygame.event.get()
             for event in events:
                 if event.type == pygame.QUIT:

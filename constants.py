@@ -13,7 +13,7 @@ class Constant:
     BUBBLE_YELLOW = 5
 
     DATA_FOLDER = "assets/"
-    PATH_LOGO = DATA_FOLDER+"LOGO.png"
+    PATH_LOGO = DATA_FOLDER + "LOGO.png"
     PATH_BUBBLE = ["bub_blue.png", "bub_violet.png", "bub_green.png", "bub_light_blue.png", "bub_red.png",
                    "bub_yellow.png"]
 
@@ -26,7 +26,13 @@ class Constant:
     BUBBLE_EXP_YELLOW = 5
     PATH_BUBBLE_EXP = ["be_blue.png", "be_violet.png", "be_green.png", "be_light_blue.png", "be_red.png",
                        "be_yellow.png"]
+    PATH_NORMAL_CURSOR = DATA_FOLDER + "ncursor.png"
+    NORMAL_CURSOR_FRAME_COUNT = 5
 
+    BUTTON_PLAY = 0
+    BUTTON_EXIT = 1
+    PATH_BUTTON_UP = ["play1.png", "exit1.png"]
+    PATH_BUTTON_DOWN = ["play2.png", "exit2.png"]
     uniqueInt = 0
 
     @staticmethod

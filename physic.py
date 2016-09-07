@@ -1,7 +1,7 @@
 from animation import Animation
 from constants import Constant
 from processing import *
-from garfield import garfield_load_image, garfield_pick_color
+from garfield import garfield_load_image, garfield_pick_color, garfield_sound_play
 import random
 import math
 
@@ -75,14 +75,14 @@ class Button(PActivity):
     def on_mouse_released(self, button, position):
         if not self.currentImage == self.pressedImage:
             return
+        self.currentImage = self.image
         (x, y) = position
         (x0, y0) = self.position
         c = garfield_pick_color(self.currentImage, (x - x0, y - y0))
         if c is not None:
             (r, g, b, a) = c
-        if a > 50:
-            self.currentImage = self.image
-            return True
+            if a > 50:
+                return True
         return False
 
 
@@ -115,7 +115,8 @@ class ButtonFly(Button):
         if self.clicked and l < 1:
             self.clicked = False
             self.on_click()
-        else:
+        elif l >= 1:
+
             dx /= l
             dy /= l
             l = delta_time / 20.0 * math.log(1 + l / 5.0)
@@ -134,7 +135,7 @@ class ButtonFly(Button):
         return res
 
     def on_click(self):
-        print("click()")
+
         pass
 
 
@@ -162,4 +163,5 @@ class BubbleFly(Bubble, Interactive):
 
     def on_mouse_press_hit(self):
         self.alive = False
+        garfield_sound_play(Constant.DATA_FOLDER + "pop.ogg")
         return True

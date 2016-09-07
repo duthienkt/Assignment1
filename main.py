@@ -13,6 +13,8 @@ class MainGame(Garfield):
         self.frame_rate(25)
         self.size((900, 600))
         self.activity = StartScreen(self)
+        garfield_music_load("assets/background.mp3")
+        garfield_music_play(-1)
         pass
 
     def on_mouse_move(self, position, rel, buttons):
@@ -40,6 +42,10 @@ class MainGame(Garfield):
 
     def set_cursor(self, cursor):
         self.cursor = cursor
+
+    def exit(self):
+        garfield_music_stop()
+        super().exit()
 
 
 MainGame().__main__()

@@ -1,7 +1,7 @@
 from animation import Animation
 from constants import Constant
 from processing import *
-from garfield import garfield_load_image, garfield_pick_color, garfield_sound_play
+from garfield import garfield_load_image, garfield_pick_color, garfield_sound_play, garfield_font
 import random
 import math
 
@@ -165,3 +165,62 @@ class BubbleFly(Bubble, Interactive):
         self.alive = False
         garfield_sound_play(Constant.DATA_FOLDER + "pop.ogg")
         return True
+
+
+class ButtonPower(Button):
+    def __init__(self, context, position):
+        super().__init__(context, position, Constant.DATA_FOLDER + Constant.PATH_BUTTON_UP[Constant.BUTTON_POWER],
+                         Constant.DATA_FOLDER + Constant.PATH_BUTTON_DOWN[Constant.BUTTON_POWER])
+        self.isPressed = False
+
+    def on_mouse_pressed(self, button, position):
+        self.isPressed = super().on_mouse_pressed(button, position)
+        return self.isPressed
+
+    def on_mouse_move(self, position, rel, buttons):
+        (x, y) = position
+        (x0, y0) = self.position
+        c = garfield_pick_color(self.currentImage, (x - x0, y - y0))
+        if c is not None:
+            (r, g, b, a) = c
+            if a > 50:
+                self.currentImage = self.pressedImage
+                return
+        self.currentImage = self.image
+
+    def on_mouse_released(self, button, position):
+        if super().on_mouse_released(button, position):
+            if self.isPressed:
+                self.isPressed = False
+                self.context.exit()
+            return True
+        return False
+
+
+class ScoreBoard(PDrawable):
+    def __init__(self):
+        self.fontPath = Constant.DATA_FOLDER + "ka1.ttf"
+        self.hit = 0
+        self.miss = 0
+        self.font = garfield_font(self.fontPath, 60)
+        self.hitIm = self.font.render("Hit:" + str(self.hit), True, Constant.COLOR_WHILE)
+        self.missIm = self.font.render("Hit:" + str(self.miss), True, Constant.COLOR_WHILE)
+
+    def draw(self, delta_time, screen, position=(0, 0)):
+        screen.blit(self.hitIm, position)
+        (x, y) = position
+        screen.blit(self.missIm, (x, y + 90))
+
+    def set_hit(self, hit):
+        self.hit = hit
+        self.hitIm = self.font.render("Hit:" + str(self.hit), True, Constant.COLOR_WHILE)
+
+    def set_miss(self, miss):
+        self.miss = miss
+        self.missIm = self.font.render("Hit:" + str(self.miss), True, Constant.COLOR_WHILE)
+
+    def inc_hit(self, delta):
+        self.set_hit(self.hit + delta)
+
+    def inc_miss(self, delta):
+        self.set_miss(self.miss + delta)

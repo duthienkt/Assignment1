@@ -71,7 +71,7 @@ class MenuButton(ButtonFly):
             for other in self.buttonList:
                 if not other == self:
                     (x, y) = other.position
-                    other.position1 = (x+1000, y)
+                    other.position1 = (x + 1000, y)
 
 
 class ExitButton(MenuButton):
@@ -130,10 +130,12 @@ class StartScreen(PActivity):
         super().__init__(context)
         self.backGround = BackGround(context)
         self.menu = Menu(context)
+        self.scoreBoard = ScoreBoard()
 
     def draw(self, delta_time, screen, position=(0, 0)):
         self.backGround.draw(delta_time, screen)
         self.menu.draw(delta_time, screen)
+        self.scoreBoard.draw(delta_time, screen, (100, 100))
         pass
 
     def on_mouse_pressed(self, button, position):

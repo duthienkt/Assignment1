@@ -62,6 +62,17 @@ def garfield_sound_play(path, times=0):
     sound_cache[path].play(times)
 
 
+font_cache = {}
+
+
+def garfield_font(path, size):
+    global font_cache
+    key = path + str(size)
+    if not font_cache.__contains__(path):
+        font_cache[key] = pygame.font.Font(path, size)
+    return font_cache[key]
+
+
 class Drawable:
     @abstractmethod
     def draw(self, screen=None, position=(0, 0)):

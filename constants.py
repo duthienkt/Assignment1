@@ -3,7 +3,7 @@ import pygame
 
 class Constant:
     BG_COLOR = pygame.Color(38, 100, 100, 255)
-
+    COLOR_WHILE = pygame.Color(255, 255, 255, 255)
     BUBBLE_FRAME_COUNT = 21
     BUBBLE_BLUE = 0
     BUBBLE_VIOLET = 1
@@ -31,8 +31,13 @@ class Constant:
 
     BUTTON_PLAY = 0
     BUTTON_EXIT = 1
-    PATH_BUTTON_UP = ["play1.png", "exit1.png"]
-    PATH_BUTTON_DOWN = ["play2.png", "exit2.png"]
+    BUTTON_POWER = 2
+
+    PATH_BUTTON_UP = ["play1.png", "exit1.png", "turnoff.png"]
+    PATH_BUTTON_DOWN = ["play2.png", "exit2.png", "turnoff1.png"]
+
+    PATH_BACKGROUND_SOUND = DATA_FOLDER + "background.ogg"
+
     uniqueInt = 0
 
     @staticmethod

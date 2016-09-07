@@ -14,7 +14,7 @@ class MainGame(Garfield):
 
     def setup(self):
         self.frame_rate(25)
-        self.size((900, 600))
+        self.size((800, 600))
         self.activity = StartScreen(self)
         garfield_music_load(Constant.PATH_BACKGROUND_SOUND)
         garfield_music_play(-1)

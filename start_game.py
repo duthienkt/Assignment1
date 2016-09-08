@@ -3,6 +3,7 @@ from animation import *
 from constants import *
 import random
 from physic import *
+from playgame import *
 
 
 class Menu(PActivity):
@@ -86,6 +87,9 @@ class PlayButton(MenuButton):
     def __init__(self, context, button_list):
         super().__init__(context, button_list, Constant.BUTTON_PLAY, 60)
 
+    def on_click(self):
+        self.context.start_activity(PlayGame(self.context))
+
 
 class BackGround(PActivity):
     def __init__(self, context):
@@ -130,7 +134,6 @@ class StartScreen(PActivity):
         super().__init__(context)
         self.backGround = BackGround(context)
         self.menu = Menu(context)
-
 
     def draw(self, delta_time, screen, position=(0, 0)):
         self.backGround.draw(delta_time, screen)

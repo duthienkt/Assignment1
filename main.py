@@ -18,7 +18,7 @@ class MainGame(Garfield):
         self.activity = StartScreen(self)
         garfield_music_load(Constant.PATH_BACKGROUND_SOUND)
         garfield_music_play(-1)
-        self.powerOff = ButtonPower(self, (self.width - 80, self.height - 80))
+        self.powerOff = ButtonPower(self, (10,10 ))
         pass
 
     def on_mouse_move(self, position, rel, buttons):

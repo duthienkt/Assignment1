@@ -49,6 +49,15 @@ class BubbleExp(Animation, Interactive):
     def draw(self, delta_time, screen, position=(0, 0)):
         super().draw(delta_time, screen, self.position)
 
+    def on_mouse_pressed(self, button, position):
+        return False
+
+    def on_mouse_released(self, button, position):
+        return False
+
+    def on_mouse_move(self, position, rel, buttons):
+        pass
+
 
 class Button(PActivity):
     def __init__(self, context, position, path1, path2):
@@ -203,24 +212,87 @@ class ScoreBoard(PDrawable):
         self.hit = 0
         self.miss = 0
         self.font = garfield_font(self.fontPath, 60)
-        self.hitIm = self.font.render("Hit:" + str(self.hit), True, Constant.COLOR_WHILE)
-        self.missIm = self.font.render("Hit:" + str(self.miss), True, Constant.COLOR_WHILE)
+        self.hitIm = self.font.render("Hit  " + str(self.hit), True, Constant.COLOR_BLUE)
+        self.missIm = self.font.render("Miss " + str(self.miss), True, Constant.COLOR_RED)
 
     def draw(self, delta_time, screen, position=(0, 0)):
         screen.blit(self.hitIm, position)
         (x, y) = position
-        screen.blit(self.missIm, (x, y + 90))
+        screen.blit(self.missIm, (x + 370, y))
 
     def set_hit(self, hit):
         self.hit = hit
-        self.hitIm = self.font.render("Hit:" + str(self.hit), True, Constant.COLOR_WHILE)
+        self.hitIm = self.font.render("Hit  " + str(self.hit), True, Constant.COLOR_BLUE)
 
     def set_miss(self, miss):
         self.miss = miss
-        self.missIm = self.font.render("Hit:" + str(self.miss), True, Constant.COLOR_WHILE)
+        self.missIm = self.font.render("Miss " + str(self.miss), True, Constant.COLOR_RED)
 
     def inc_hit(self, delta):
         self.set_hit(self.hit + delta)
 
     def inc_miss(self, delta):
         self.set_miss(self.miss + delta)
+
+
+class BubblePlay(Bubble):
+    def __init__(self, bubble_type, position, score_board):
+        super().__init__(bubble_type, (0, 0))
+        self.scoreBoard = score_board
+        (x, y) = position
+        x -= self.width/2
+        self.position = (x, y)
+        self.position0 = self.position
+        self.alive = True
+        c = max(16000 - score_board.hit * 500, 2000)
+        self.hideTime = random.randint(200, c + 3000)
+        self.stayTime = self.hideTime / 4
+        self.delta = 0
+        self.waitTime = 0
+        self.v = 50
+        self.willLost = False
+
+
+    @staticmethod
+    def create_random(position, score_board):
+        return BubblePlay(random.randint(0, len(Constant.PATH_BUBBLE) - 1), position, score_board)
+
+    def on_mouse_pressed(self, button, position):
+        return super().on_mouse_pressed(button, position)
+
+    def draw(self, delta_time, screen, position=(0, 0)):
+        if self.v > 0:
+            if self.delta >= 0:
+                if self.willLost:
+                    self.willLost = False
+                    self.scoreBoard.inc_miss(1)
+                self.waitTime += delta_time
+                if self.waitTime > self.hideTime:
+                    self.waitTime = 0
+                    self.v = -50
+            else:
+                self.delta += self.v * delta_time / 1000.0
+                self.willLost = True
+
+        else:
+            if self.delta <= -self.height / 1.5:
+                self.waitTime += delta_time
+                if self.waitTime > self.stayTime:
+                    self.waitTime = 0
+                    self.v = 50
+            else:
+                self.delta += self.v * delta_time / 1000.0
+
+        (x, y) = self.position0
+
+        self.position = (x, y + self.delta)
+        super().draw(delta_time, screen)
+
+    def on_mouse_press_hit(self):
+        self.scoreBoard.inc_hit(1)
+        self.alive = False
+        garfield_sound_play(Constant.DATA_FOLDER + "pop.ogg")
+        return True
+
+    def is_alive(self):
+        return self.alive

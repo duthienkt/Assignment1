@@ -3,6 +3,8 @@ import pygame
 
 class Constant:
     BG_COLOR = pygame.Color(38, 100, 100, 255)
+    COLOR_BLUE = pygame.Color(0, 0, 255, 255)
+    COLOR_RED = pygame.Color(255, 0, 0, 255)
     COLOR_WHILE = pygame.Color(255, 255, 255, 255)
     BUBBLE_FRAME_COUNT = 21
     BUBBLE_BLUE = 0
@@ -37,6 +39,26 @@ class Constant:
     PATH_BUTTON_DOWN = ["play2.png", "exit2.png", "turnoff1.png"]
 
     PATH_BACKGROUND_SOUND = DATA_FOLDER + "background.ogg"
+
+    PATH_PLAY_IMAGE = ["1.png", "2.png", "3.png", "4.png"]
+
+    #List axis of box in the background
+    AXIS_BOX = ((153, 455),
+                (264, 455),
+                (383, 455),
+                (498, 455),
+                (617, 455),
+                (97 , 487),
+                (207, 487),
+                (319, 487),
+                (438, 487),
+                (569, 487),
+                (691, 487),
+                (148, 533),
+                (267, 533),
+                (387, 535),
+                (503, 535),
+                (622, 535))
 
     uniqueInt = 0
 

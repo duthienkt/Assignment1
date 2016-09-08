@@ -79,7 +79,7 @@ class MenuButton(ButtonFly):
 
 class ExitButton(MenuButton):
     def __init__(self, context, button_list):
-        super().__init__(context, button_list, Constant.BUTTON_EXIT, 150)
+        super().__init__(context, button_list, Constant.BUTTON_EXIT, 100)
 
     def on_click(self):
         self.context.exit()

@@ -38,17 +38,19 @@ class Constant:
     PATH_BUTTON_UP = ["play1.png", "exit1.png", "turnoff.png", "defeat.png"]
     PATH_BUTTON_DOWN = ["play2.png", "exit2.png", "turnoff1.png", "defeat2.png"]
 
-    PATH_BACKGROUND_SOUND = DATA_FOLDER + "background.ogg"
+    PATH_BACKGROUND_SOUND = [DATA_FOLDER + "AX.ogg", DATA_FOLDER + "background.ogg",
+                             DATA_FOLDER + "tt.ogg",
+                             ]
 
     PATH_PLAY_IMAGE = ["1.png", "2.png", "3.png", "4.png"]
 
-    #List axis of box in the background
+    # List axis of box in the background
     AXIS_BOX = ((153, 455),
                 (264, 455),
                 (383, 455),
                 (498, 455),
                 (617, 455),
-                (97 , 487),
+                (97, 487),
                 (207, 487),
                 (319, 487),
                 (438, 487),

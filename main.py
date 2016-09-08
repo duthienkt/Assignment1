@@ -1,7 +1,7 @@
 from constants import Constant
 from garfield import *
 from start_game import StartScreen
-from playgame import  PlayGame
+from playgame import PlayGame
 from physic import NormalCursor, ButtonPower
 
 
@@ -17,9 +17,11 @@ class MainGame(Garfield):
         self.frame_rate(25)
         self.size((800, 600))
         self.activity = StartScreen(self)
-        garfield_music_load(Constant.PATH_BACKGROUND_SOUND)
+        for p in Constant.PATH_BACKGROUND_SOUND:
+            garfield_add_music(p)
+
         garfield_music_play(-1)
-        self.powerOff = ButtonPower(self, (10,10 ))
+        self.powerOff = ButtonPower(self, (10, 10))
         pass
 
     def on_mouse_move(self, position, rel, buttons):

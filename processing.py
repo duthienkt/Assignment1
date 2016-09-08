@@ -9,6 +9,11 @@ class PDrawable:
         pass
 
 
+class PListener:
+    def onHandle(self):
+        pass
+
+
 class PActivity(PDrawable, Interactive):
     def __init__(self, context):
         self.context = context

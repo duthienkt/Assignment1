@@ -34,9 +34,9 @@ class Constant:
     BUTTON_PLAY = 0
     BUTTON_EXIT = 1
     BUTTON_POWER = 2
-
-    PATH_BUTTON_UP = ["play1.png", "exit1.png", "turnoff.png"]
-    PATH_BUTTON_DOWN = ["play2.png", "exit2.png", "turnoff1.png"]
+    BUTTON_OVER = 3
+    PATH_BUTTON_UP = ["play1.png", "exit1.png", "turnoff.png", "defeat.png"]
+    PATH_BUTTON_DOWN = ["play2.png", "exit2.png", "turnoff1.png", "defeat2.png"]
 
     PATH_BACKGROUND_SOUND = DATA_FOLDER + "background.ogg"
 

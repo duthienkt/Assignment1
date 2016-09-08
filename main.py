@@ -1,6 +1,7 @@
 from constants import Constant
 from garfield import *
 from start_game import StartScreen
+from playgame import  PlayGame
 from physic import NormalCursor, ButtonPower
 
 
@@ -47,8 +48,11 @@ class MainGame(Garfield):
         self.cursor.draw(self.deltaTime, self.screen)
         pass
 
-    def start_activity(self, act):
-        self.activity = act
+    def start_activity(self, act_name):
+        if act_name == "start":
+            self.activity = StartScreen(self)
+        elif act_name == "play":
+            self.activity = PlayGame(self)
 
     def set_cursor(self, cursor):
         self.cursor = cursor

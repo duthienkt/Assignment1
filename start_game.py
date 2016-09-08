@@ -3,7 +3,7 @@ from animation import *
 from constants import *
 import random
 from physic import *
-from playgame import *
+from playgame import PlayGame
 
 
 class Menu(PActivity):
@@ -58,6 +58,8 @@ class Menu(PActivity):
         return super().on_mouse_released(button, position)
 
 
+
+
 class MenuButton(ButtonFly):
     def __init__(self, context, button_list, button_id, y):
         self.buttonList = button_list
@@ -88,7 +90,7 @@ class PlayButton(MenuButton):
         super().__init__(context, button_list, Constant.BUTTON_PLAY, 60)
 
     def on_click(self):
-        self.context.start_activity(PlayGame(self.context))
+        self.context.start_activity("play")
 
 
 class BackGround(PActivity):
@@ -129,7 +131,7 @@ class BackGround(PActivity):
         return False
 
 
-class StartScreen(PActivity):
+class StartScreen(PActivity, PListener):
     def __init__(self, context):
         super().__init__(context)
         self.backGround = BackGround(context)
@@ -151,3 +153,6 @@ class StartScreen(PActivity):
     def on_mouse_released(self, button, position):
         self.menu.on_mouse_released(button, position)
         pass
+
+    def onHandle(self):
+        self.context.exit()

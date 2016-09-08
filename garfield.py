@@ -47,6 +47,11 @@ def garfield_music_stop():
     pygame.mixer.music.stop()
 
 
+def garfield_add_music(path):
+    garfield_mixer_init()
+    pygame.mixer.music.queue(path)
+
+
 def garfield_music_is_busy():
     garfield_mixer_init()
     return pygame.mixer.music.get_busy()

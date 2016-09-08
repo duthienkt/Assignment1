@@ -154,8 +154,16 @@ class BubbleFly(Bubble, Interactive):
         return BubbleFly(random.randint(0, len(Constant.PATH_BUBBLE) - 1),
                          (random.randint(0, w), random.randint(h, h + 100)), random.randint(3, 7))
 
+    @staticmethod
+    def create_random_from_box(position):
+        return BubbleFly(random.randint(0, len(Constant.PATH_BUBBLE) - 1),
+                         position, random.randint(3, 7))
+
     def __init__(self, bubble_type, position, v):
         super().__init__(bubble_type, position)
+        (x, y) = position
+        x -= self.width / 2
+        self.position = (x, y)
         self.v = v
         self.alive = True
 
@@ -201,7 +209,7 @@ class ButtonPower(Button):
         if super().on_mouse_released(button, position):
             if self.isPressed:
                 self.isPressed = False
-                self.context.exit()
+                self.context.activity.onHandle()
             return True
         return False
 
@@ -240,18 +248,17 @@ class BubblePlay(Bubble):
         super().__init__(bubble_type, (0, 0))
         self.scoreBoard = score_board
         (x, y) = position
-        x -= self.width/2
+        x -= self.width / 2
         self.position = (x, y)
         self.position0 = self.position
         self.alive = True
-        c = max(16000 - score_board.hit * 500, 2000)
+        c = max(16000 - score_board.hit * 500 + score_board.miss * 100, 2000)
         self.hideTime = random.randint(200, c + 3000)
         self.stayTime = self.hideTime / 4
         self.delta = 0
         self.waitTime = 0
         self.v = 50
         self.willLost = False
-
 
     @staticmethod
     def create_random(position, score_board):

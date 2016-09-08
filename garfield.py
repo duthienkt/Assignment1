@@ -51,6 +51,7 @@ def garfield_add_music(path):
     garfield_mixer_init()
     if not garfield_music_is_busy():
         garfield_music_load(path)
+        garfield_music_play(0)
     else:
         pygame.mixer.music.queue(path)
 

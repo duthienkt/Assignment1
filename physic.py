@@ -252,7 +252,7 @@ class BubblePlay(Bubble):
         self.position = (x, y)
         self.position0 = self.position
         self.alive = True
-        c = max(16000 - score_board.hit * 500 + score_board.miss * 100, 2000)
+        c = max(16000 - score_board.hit * 500 + score_board.miss * 250, 2000)
         self.hideTime = random.randint(200, c + 3000)
         self.stayTime = self.hideTime / 4
         self.delta = 0

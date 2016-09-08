@@ -1,5 +1,5 @@
 from physic import *
-
+from garfield import  garfield_add_music
 
 class PlayGame(PActivity, PListener):
     def __init__(self, context):
@@ -91,6 +91,7 @@ class PlayGame(PActivity, PListener):
         return self.overBT.on_mouse_released(button, position)
 
     def game_over(self):
+        garfield_add_music(Constant.PATH_BACKGROUND_SOUND[0])
         self.bubbles = []
         self.isOver = True
         for i in range(16):
@@ -105,6 +106,7 @@ class PlayGame(PActivity, PListener):
 class GameOver(ButtonFly):
     def on_click(self):
         self.context.start_activity("play")
+        garfield_add_music(Constant.PATH_BACKGROUND_SOUND[random.randint(0, 10000)% 3])
 
     def __init__(self, context):
         im = garfield_load_image(Constant.DATA_FOLDER + Constant.PATH_BUTTON_UP[Constant.BUTTON_OVER])

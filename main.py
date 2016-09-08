@@ -1,3 +1,5 @@
+import random
+
 from constants import Constant
 from garfield import *
 from start_game import StartScreen
@@ -20,7 +22,6 @@ class MainGame(Garfield):
         for p in Constant.PATH_BACKGROUND_SOUND:
             garfield_add_music(p)
 
-        garfield_music_play(-1)
         self.powerOff = ButtonPower(self, (10, 10))
         pass
 
@@ -31,6 +32,9 @@ class MainGame(Garfield):
         pass
 
     def on_mouse_pressed(self, button, position):
+        if not garfield_music_is_busy():
+            garfield_add_music(Constant.PATH_BACKGROUND_SOUND[random.randint(0, 10000) % 3])
+
         if self.powerOff.on_mouse_pressed(button, position):
             return
         self.activity.on_mouse_pressed(button, position)

@@ -136,6 +136,7 @@ class StartScreen(PActivity, PListener):
         super().__init__(context)
         self.backGround = BackGround(context)
         self.menu = Menu(context)
+        garfield_add_music(Constant.PATH_BACKGROUND_SOUND[random.randint(0, 10000) % 3])
 
     def draw(self, delta_time, screen, position=(0, 0)):
         self.backGround.draw(delta_time, screen)

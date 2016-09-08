@@ -15,6 +15,7 @@ class PlayGame(PActivity, PListener):
         for i in range(16):
             self.bubbles.append(BubblePlay.create_random(Constant.AXIS_BOX[i], self.scoreBoard))
         self.overBT = GameOver(self.context)
+        context.set_cursor(ArrowCursor())
 
     def on_mouse_pressed(self, button, position):
         if self.overBT.on_mouse_pressed(button, position):

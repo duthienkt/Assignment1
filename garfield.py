@@ -89,7 +89,7 @@ class Drawable:
 
 
 class Interactive:
-    @abstractproperty
+    @abstractmethod
     def on_mouse_pressed(self, button, position):
         """Called when mouse is pressed. button : int(1:3); position : (int, int)"""
         return False

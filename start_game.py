@@ -98,8 +98,8 @@ class BackGround(PActivity):
         super().__init__(context)
         self.w = context.width
         self.h = context.height
-        self.bg = pygame.Surface((self.w, self.h))
-        self.bg.fill(Constant.BG_COLOR)
+        self.bg = garfield_load_image(Constant.PATH_ST_GR)
+
         self.bubbles = []
 
     def draw(self, delta_time, screen, position=(0, 0)):
@@ -137,6 +137,7 @@ class StartScreen(PActivity, PListener):
         self.backGround = BackGround(context)
         self.menu = Menu(context)
         garfield_add_music(Constant.PATH_BACKGROUND_SOUND[random.randint(0, 10000) % 3])
+        context.set_cursor(NormalCursor())
 
     def draw(self, delta_time, screen, position=(0, 0)):
         self.backGround.draw(delta_time, screen)

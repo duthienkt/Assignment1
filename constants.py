@@ -16,6 +16,7 @@ class Constant:
 
     DATA_FOLDER = "assets/"
     PATH_LOGO = DATA_FOLDER + "LOGO.png"
+    PATH_ST_GR = DATA_FOLDER + "startbackground.png"
     PATH_BUBBLE = ["bub_blue.png", "bub_violet.png", "bub_green.png", "bub_light_blue.png", "bub_red.png",
                    "bub_yellow.png"]
 
@@ -30,6 +31,8 @@ class Constant:
                        "be_yellow.png"]
     PATH_NORMAL_CURSOR = DATA_FOLDER + "ncursor.png"
     NORMAL_CURSOR_FRAME_COUNT = 5
+    PATH_ARROW_CURSOR = DATA_FOLDER + "arrow.png"
+    ARROW_CURSOR_FRAME_COUNT = 4
 
     BUTTON_PLAY = 0
     BUTTON_EXIT = 1

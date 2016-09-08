@@ -106,6 +106,44 @@ class NormalCursor(Animation, Interactive):
     def draw(self, delta_time, screen, position=(0, 0)):
         super().draw(delta_time, screen, self.position)
 
+    def on_mouse_released(self, button, position):
+        return False
+
+    def on_mouse_pressed(self, button, position):
+        return False
+
+
+class ArrowCursor(Animation, Interactive):
+    def __init__(self):
+        super().__init__(Constant.PATH_ARROW_CURSOR, Constant.ARROW_CURSOR_FRAME_COUNT, 50)
+        self.position = (0, 0)
+        self.isLoop = False
+        self.go = False
+
+    def on_mouse_move(self, position, rel, buttons):
+        self.position = position
+
+    def draw(self, delta_time, screen, position=(0, 0)):
+        (x, y) = self.position
+        x -= 11
+        y -= 14
+        if self.go:
+            super().draw(delta_time, screen, (x, y))
+        if not self.is_alive():
+            self.restart()
+            self.go = False
+        if not self.go:
+            super().draw(0, screen, (x, y))
+
+    def on_mouse_released(self, button, position):
+
+        return False
+
+    def on_mouse_pressed(self, button, position):
+        self.go = True
+        self.restart()
+        return False
+
 
 class ButtonFly(Button):
     def __init__(self, context, position0, position1, path1, path2):

@@ -38,6 +38,7 @@ class MainGame(Garfield):
         if self.powerOff.on_mouse_pressed(button, position):
             return
         self.activity.on_mouse_pressed(button, position)
+        self.cursor.on_mouse_pressed(button, position)
         pass
 
     def setting(self):
@@ -47,6 +48,8 @@ class MainGame(Garfield):
         if self.powerOff.on_mouse_released(button, position):
             return
         self.activity.on_mouse_released(button, position)
+        self.cursor.on_mouse_released(button, position)
+
 
     def draw(self, screen=None, position=(0, 0)):
         self.activity.draw(self.deltaTime, self.screen)

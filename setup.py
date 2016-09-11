@@ -1,4 +1,8 @@
-from distutils.core import setup
-import py2exe
+import sys
+from cx_Freeze import setup, Executable
 
-setup(console=['main.py'])
+setup(
+    name = "Bubble Rush",
+    version = "1.0",
+    description = "Assignment 1, 09/09/2016",
+    executables = [Executable("Main.py", base = "Win32GUI")])
